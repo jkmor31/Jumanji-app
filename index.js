@@ -7,7 +7,7 @@ app.set("view engine", "ejs");
 app.use('/public', express.static('public'));
 
 app.get("/", (req, res) => {
-	res.send("my server has started");
+	res.render("home");
 })
 
 app.get("/home", (req, res) => {
