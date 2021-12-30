@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/question.css">
+    <title>Ruby Roundhouse</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Ruby Question <%= pageId %></h1>
+    <p><%= question %> </p><br>
+    <a href="/rubyWrong"><%= answerA %></a>
+    <% if (pageId == 3) { %>
+        <a href="/win"><%= answerWin %></a>
+        <a href="/rubyWrong"><%= answerC %></a>
+    <% } else { %>
+        <a href="/ruby/<%= +pageId + 1 %>"><%= answerB %></a>
+        <a href="/rubyWrong"><%= answerC %></a>
+    <% } %>
+    <a id="home" href="/home">Home</a>
+</div>
+</body>
+</html>

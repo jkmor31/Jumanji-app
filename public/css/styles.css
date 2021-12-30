@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Luxurious+Roman&family=Source+Sans+Pro&display=swap');
+body {
+    color: navy;
+    font-family: 'Source Sans Pro', sans-serif;
+    background-color: sandybrown;
+}
+img {
+    margin: auto;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    object-position: 100% 0;
+    display: block;
+    border: 3px solid white;
+}
+.container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.container > div {
+    flex: 50%;
+    margin: 10px 0;
+}
+h1 {
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+a {
+    font-family: 'Luxurious Roman', cursive;
+    text-decoration: none;
+    color: rgb(93, 3, 3);
+    font-size: 18px;
+}
+
+img:hover {
+    border: 3px solid navy;
+}
+
+span {
+    line-height: 80px;
+    font-size: 50px;
+    color: rgb(162, 1, 1);
+}
+
+.wrapper {
+    background-color:navajowhite;
+    border: 2px dashed navy;
+    margin: 20px auto;
+    width: 50vw;
+    min-height: 50vh;
+    border-radius: 40px;
+}
