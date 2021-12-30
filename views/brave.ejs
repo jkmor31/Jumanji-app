@@ -13,15 +13,16 @@
     <p><%= question %> </p>
         <div>
 
-            <a href="/braveWrong"><%= answerA %></a>
+            
             
             <% if (pageId == 3) { %>
-            <a href="/win"><%= answerWin %></a>
             <a href="/braveWrong"><%= answerC %></a>
+            <a href="/win"><%= answerWin %></a>
             <% } else { %>
             <a href="/brave/<%= +pageId + 1 %>"><%= answerB %></a>
             <a href="/braveWrong"><%= answerC %></a>
             <% } %>
+            <a href="/braveWrong"><%= answerA %></a>
             <a id="home" href="/home">Home</a>
         </div>
     </div>
