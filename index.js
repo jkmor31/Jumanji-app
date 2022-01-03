@@ -1,18 +1,68 @@
 const express = require("express");
+const session = require('express-session');
+const querystring = require('query-string');
 
 const app = express();
 const port = process.env.PORT || 3800
 
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
+app.use(session({
+    secret: 'random string',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+   }));
+
 app.set("view engine", "ejs");
 app.use('/public', express.static('public'));
 
-app.get("/", (req, res) => {
-	res.render("home");
-})
+app.get('/', (req, res) => {
+	let my_user = "";
+    let puncuation = "";
+    let invalid_login = false;
+
+    invalid_login = req.query.reason || null;
+
+    if (req.session && req.session.username) {
+        my_user = req.session.username;
+        puncuation = ',';
+    }
+    const user = req.session ? req.session.username : "user not set";
+	res.render("index", {my_user: user, puncuation: puncuation, invalid_login: invalid_login});
+}); 
 
 app.get("/home", (req, res) => {
-    res.render("home");
+    if (req.session && req.session.username) {
+        my_user = req.session.username;
+    }
+    const user = req.session ? req.session.username : "user not set";
+    res.render("home", {my_user: user});
 })
+
+app.post('/signup', (req, res) => {
+    const valid_users = [
+        {"name": "sue", "password": "sue"},
+        {"name": "john", "password": "john"},
+        {"name": "mary", "password": "mary"}
+    ];
+
+	const user = req.body.username;
+    const pass = req.body.password;
+
+    const found_user = valid_users.find(usr => usr.name == user && usr.password == pass);
+
+    if (found_user) {
+        req.session.username = user;
+        res.redirect("/home");
+    } else {
+        req.session.destroy(() =>
+        {console.log("user reset");})
+        // req.session.username = user;
+        res.redirect("/?reason=invalid_user");	
+    }
+
+});
 
 
 //Bravestone Routes
