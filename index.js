@@ -1,5 +1,6 @@
 const express = require("express");
 const session = require('express-session');
+const res = require("express/lib/response");
 const querystring = require('query-string');
 
 const app = express();
@@ -32,12 +33,22 @@ app.get('/', (req, res) => {
 	res.render("index", {my_user: user, puncuation: puncuation, invalid_login: invalid_login});
 }); 
 
-app.get("/home", (req, res) => {
-    if (req.session && req.session.username) {
-        my_user = req.session.username;
+const auth = (req,res,next) => {
+   if (req.session && req.session.username) {
+        next();
+    } else {
+        res.redirect("/?reason=invalid_login");
     }
-    const user = req.session ? req.session.username : "user not set";
-    res.render("home", {my_user: user});
+}
+
+app.get("/*", auth);
+
+app.get('/home', (req, res) => {
+    if (req.session && req.session.username) {
+        res.render("home", {my_user: req.session.username});
+    } else {
+        res.redirect('/');
+    }    
 })
 
 app.post('/signup', (req, res) => {
@@ -62,6 +73,12 @@ app.post('/signup', (req, res) => {
         res.redirect("/?reason=invalid_user");	
     }
 
+});
+
+app.get("/signout", (req, res) => {
+    req.session.destroy(() => {
+        res.end("you have been signed out");
+    });
 });
 
 
